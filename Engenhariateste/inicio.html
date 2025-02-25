@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Miller Receitas &#x1F957; - Início</title>
+    <link rel="shortcut icon" href="imagens/Iconarchive.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: rgb(254, 106, 0);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            width: 100%;
+            padding-top: 20px;
+        }
+        .search-box {
+            margin-bottom: 20px;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        button {
+            background: white;
+            color: rgb(254, 106, 0);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .gallery img {
+            width: 80%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .results {
+            margin-top: 20px;
+            text-align: left;
+            width: 80%;
+            margin: auto;
+        }
+        .result-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .result-item a {
+            color: yellow;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .nav {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+        .nav button {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .nav button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav">
+        <button onclick="confirmarSaida()">Sair</button>
+    </div>
+
+    <div class="container">
+        <h2>Busque sua Receita</h2>
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Digite o nome da receita">
+            <button onclick="buscarReceitas()">Buscar</button>
+        </div>
+
+        <div class="gallery">
+            <img src="miller/1.png" alt="Receita 1">
+            <img src="miller/2.png" alt="Receita 2">
+            <img src="miller/3.png" alt="Receita 3">
+            <a href="receita2.html"><img src="miller/4.png" alt="Receita 4"></a>
+            <img src="miller/5.png" alt="Receita 5">
+        </div>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <div class="nav">
+        <button onclick="irParaReceitas()">Receitas</button>
+        <button onclick="confirmarSaida()">Sair</button>
+    </div>
+
+    <script>
+         function irParaReceitas() {
+        window.location.href = "http://127.0.0.1:5500/receitas.html";
+    }
+
+        function confirmarSaida() {
+            let resposta = confirm("Tem certeza que deseja sair do site?");
+            if (resposta) {
+                window.location.href = "login.html";
+            }
+        }
+    
+        function buscarReceitas() {
+            let query = document.getElementById("search").value;
+            let apiKey = "AIzaSyAWIQfoN9P1wCTf_4RsDADUnIJEynBsYHE";  
+            let cx = "61193fa23e4b7442b"; 
+            let url = `https://www.googleapis.com/customsearch/v1?q=${query}+receita&key=${apiKey}&cx=${cx}`;
+    
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let resultsDiv = document.getElementById("results");
+                    resultsDiv.innerHTML = "";
+    
+                    if (data.items) {
+                        data.items.forEach(item => {
+                            let resultItem = document.createElement("div");
+                            resultItem.classList.add("result-item");
+                            resultItem.innerHTML = `<a href="${item.link}" target="_blank">${item.title}</a><p>${item.snippet}</p>`;
+                            resultsDiv.appendChild(resultItem);
+                        });
+                    } else {
+                        resultsDiv.innerHTML = "<p>Nenhuma receita encontrada.</p>";
+                    }
+                })
+                .catch(error => console.error("Erro ao buscar receitas:", error));
+        }
+    </script>
+    
+
+</body>
+</html>

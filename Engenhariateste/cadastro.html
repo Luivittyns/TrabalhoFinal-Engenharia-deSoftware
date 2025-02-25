@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Miller Receitas &#x1F957; - Cadastro</title>
+    <link rel="shortcut icon" href="imagens/Iconarchive.png" type="image/x-icon">
+    <style>
+        body {
+            background-color: rgb(254, 106, 0);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            width: 320px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+        }
+        input {
+            width: 90%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+        }
+        button {
+            background: #fff;
+            color: rgb(254, 106, 0);
+            border: none;
+            padding: 12px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: rgb(255, 200, 150);
+        }
+        .message {
+            margin-top: 15px;
+            font-size: 14px;
+            color: yellow;
+        }
+        .nav {
+            margin-top: 20px;
+        }
+        .nav a {
+            color: white;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 14px;
+        }
+        .nav a:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Cadastro</h2>
+        <form id="cadastroForm">
+            <input type="text" id="nome" placeholder="Nome completo" required>
+            <input type="email" id="email" placeholder="E-mail" required>
+            <input type="text" id="usuario" placeholder="Nome de usuário" required>
+            <input type="password" id="senha" placeholder="Senha" required>
+            <button type="submit">Cadastrar</button>
+            <p class="message" id="mensagemCadastro"></p>
+        </form>
+    </div>
+
+    <div class="nav">
+        <a href="login.html">Já tem uma conta? Faça login</a>
+    </div>
+
+    <script>
+        document.getElementById("cadastroForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let nome = document.getElementById("nome").value;
+            let email = document.getElementById("email").value;
+            let usuario = document.getElementById("usuario").value;
+            let senha = document.getElementById("senha").value;
+            let mensagemCadastro = document.getElementById("mensagemCadastro");
+
+            if (nome && email && usuario && senha) {
+                mensagemCadastro.textContent = "Cadastro realizado com sucesso!";
+                mensagemCadastro.style.color = "lightgreen";
+
+                setTimeout(() => {
+                    window.location.href = "login.html"; 
+                }, 2000);
+            } else {
+                mensagemCadastro.textContent = "Por favor, preencha todos os campos!";
+                mensagemCadastro.style.color = "yellow";
+            }
+        });
+    </script>
+
+</body>
+</html>
